@@ -28,6 +28,10 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        # API
+        - { path: ^/api, roles: ROLE_USER, methods: [POST, PUT, INSERT]}
+        # WEB - API LOGIN
+        - { path: /, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
