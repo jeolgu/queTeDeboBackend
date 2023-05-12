@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Token;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,12 +40,38 @@ class TokenRepository extends ServiceEntityRepository
         }
     }
 
-    public function dameTokenPorIdUsuario($value): ?array
+    public function dameTokenPorIdUsuario($value): array
     {
-        return $this->createQueryBuilder('token')
-            ->andWhere('token.id_usuario_id = :val AND CURRENT_DATE <= token.expiracion ')
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.id_usuario = :val AND :hoy <= t.expiracion')
             ->setParameter('val', $value)
-            ->orderBy('token.expiraion', 'DESC')
+            ->setParameter('hoy', new DateTime())
+            ->orderBy('t.expiracion', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function compruebaToken($token): bool{
+
+        $sql = $this->createQueryBuilder('t')
+            ->andWhere('t.token = :val AND :hoy <= t.expiracion')
+            ->setParameter('val', $token)
+            ->setParameter('hoy', new DateTime())
+            ->orderBy('t.expiracion', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return (count($sql)>0) ? true: false;
+    }
+
+    public function dameUsuarioPorToken($value): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.token = :val AND :hoy <= t.expiracion')
+            ->setParameter('val', $value)
+            ->setParameter('hoy', new DateTime())
+            ->orderBy('t.expiracion', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getResult();

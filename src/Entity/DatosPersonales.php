@@ -13,7 +13,7 @@ class DatosPersonales
     #[ORM\JoinColumn(nullable: false)]
     private ?User $id_usuario = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -148,7 +148,7 @@ class DatosPersonales
     public function toArray(): array
     {
         $datosPersonalesArray = [
-            'id_usuario' => $this->id_usuario,
+            //'id_usuario' => $this->id_usuario->getId(),
             'nombre' => $this->nombre,
             'apellidos' => $this->apellidos,
             'edad' => $this->edad,
@@ -165,7 +165,7 @@ class DatosPersonales
     {
         $content = json_decode($content, true);
 
-        $this->id_usuario = $content['id_usuario'];
+        //$this->id_usuario = $content['id_usuario'];
         $this->nombre = $content['nombre'];
         $this->apellidos = $content['apellidos'];
         $this->edad = $content['edad'];
