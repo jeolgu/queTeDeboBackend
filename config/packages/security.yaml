@@ -30,7 +30,8 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         # API
         # - { path: ^/api, roles: ROLE_USER, methods: [POST, PUT, INSERT]}
-        { path: ^/api, roles: PUBLIC_ACCESS }
+        - { path: ^/api/cobro, roles: PUBLIC_ACCESS }
+        - { path: ^/api/user, roles: PUBLIC_ACCESS }
         # WEB - API LOGIN
         # - { path: /, roles: PUBLIC_ACCESS }
 
