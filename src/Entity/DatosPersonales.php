@@ -144,4 +144,35 @@ class DatosPersonales
 
         return $this;
     }
+
+    public function toArray(): array
+    {
+        $datosPersonalesArray = [
+            'id_usuario' => $this->id_usuario,
+            'nombre' => $this->nombre,
+            'apellidos' => $this->apellidos,
+            'edad' => $this->edad,
+            'localidad' => $this->localidad,
+            'cp' => $this->cp,
+            'direccion' => $this->direccion,
+            'pais' => $this->pais,
+            'idioma_predefinido' => $this->idioma_predefinido
+        ];
+        return $datosPersonalesArray;
+    }
+
+    public function fromJson($content): void
+    {
+        $content = json_decode($content, true);
+
+        $this->id_usuario = $content['id_usuario'];
+        $this->nombre = $content['nombre'];
+        $this->apellidos = $content['apellidos'];
+        $this->edad = $content['edad'];
+        $this->localidad = $content["localidad"];
+        $this->cp = $content["cp"];
+        $this->direccion = $content["direccion"];
+        $this->pais = $content["pais"];
+        $this->idioma_predefinido = $content["idioma_predefinido"];       
+    }
 }

@@ -108,7 +108,6 @@ class CobroRepository extends ServiceEntityRepository
 
             return $sql->getQuery()
                     ->getResult();
-
     }
 
 //    /**

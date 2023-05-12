@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CobroRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,16 +32,16 @@ class Cobro
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texto = null;
 
-    #[ORM\Column(options: ["default"=> false])]
+    #[ORM\Column(options: ["default" => false])]
     private ?bool $revisado = null;
 
-    #[ORM\Column(options: ["default"=> false])]
+    #[ORM\Column(options: ["default" => false])]
     private ?bool $completado = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fecha_completado = null;
 
-    #[ORM\Column(options: ["default"=> false])]
+    #[ORM\Column(options: ["default" => false])]
     private ?bool $archivado = null;
 
     public function getId(): ?int
@@ -154,5 +155,39 @@ class Cobro
         $this->archivado = $archivado;
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        $cobrotArray = [
+            'id' => $this->id,
+            'creador' => $this->creador,
+            'receptor' => $this->receptor,
+            'creacion' => $this->creacion->format('Y-m-d H:i'),
+            'titulo' => $this->titulo,
+            'texto' => $this->texto,
+            'revisado' => $this->revisado,
+            'completado' => $this->completado,
+            'fecha_completado' => $this->fecha_completado->format('Y-m-d H:i'),
+            'archivado' => $this->archivado
+        ];
+        return $cobrotArray;
+    }
+
+    public function fromJson($content): void
+    {
+        $content = json_decode($content, true);
+
+        $this->id = $content['id'];
+        $this->creador = $content['creador'];
+        $this->receptor = $content['receptor'];
+        $this->creacion = DateTime::createFromFormat('Y-m-d H:i', $content['creacion']);
+        $this->titulo = $content["titulo"];
+        $this->texto = $content["texto"];
+        $this->revisado = $content["revisado"];
+        $this->completado = $content["completado"];
+        $this->fecha_completado = DateTime::createFromFormat('Y-m-d H:i', $content['fecha_completado']);
+        $this->archivado = $content["archivado"];
+        
     }
 }

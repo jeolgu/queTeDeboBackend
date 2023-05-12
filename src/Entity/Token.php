@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TokenRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -63,5 +64,24 @@ class Token
         $this->expiracion = $expiracion;
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        $datosPersonalesArray = [
+            'id_usuario' => $this->id_usuario,
+            'token' => $this->token,
+            'expiracion' => $this->expiracion
+        ];
+        return $datosPersonalesArray;
+    }
+
+    public function fromJson($content): void
+    {
+        $content = json_decode($content, true);
+
+        $this->id_usuario = $content['id_usuario'];
+        $this->token = $content['token'];
+        $this->expiracion = DateTime::createFromFormat('Y-m-d H:i:s', $content['expiracion']);
     }
 }
