@@ -29,9 +29,10 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         # API
-        - { path: ^/api, roles: ROLE_USER, methods: [POST, PUT, INSERT]}
+        # - { path: ^/api, roles: ROLE_USER, methods: [POST, PUT, INSERT]}
+        { path: ^/api, roles: PUBLIC_ACCESS }
         # WEB - API LOGIN
-        - { path: /, roles: PUBLIC_ACCESS }
+        # - { path: /, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
