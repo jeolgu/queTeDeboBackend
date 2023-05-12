@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,6 +28,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToOne(mappedBy: 'id_usuario', cascade: ['persist', 'remove'])]
+    private ?DatosPersonales $datosPersonales = null;
+
+    #[ORM\OneToMany(mappedBy: 'id_usuario', targetEntity: Token::class)]
+    private Collection $tokens;
+
+    public function __construct()
+    {
+        $this->tokens = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,5 +108,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getDatosPersonales(): ?DatosPersonales
+    {
+        return $this->datosPersonales;
+    }
+
+    public function setDatosPersonales(DatosPersonales $datosPersonales): self
+    {
+        // set the owning side of the relation if necessary
+        if ($datosPersonales->getIdUsuario() !== $this) {
+            $datosPersonales->setIdUsuario($this);
+        }
+
+        $this->datosPersonales = $datosPersonales;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Token>
+     */
+    public function getTokens(): Collection
+    {
+        return $this->tokens;
+    }
+
+    public function addToken(Token $token): self
+    {
+        if (!$this->tokens->contains($token)) {
+            $this->tokens->add($token);
+            $token->setIdUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeToken(Token $token): self
+    {
+        if ($this->tokens->removeElement($token)) {
+            // set the owning side to null (unless already changed)
+            if ($token->getIdUsuario() === $this) {
+                $token->setIdUsuario(null);
+            }
+        }
+
+        return $this;
     }
 }
