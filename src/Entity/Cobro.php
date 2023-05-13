@@ -178,7 +178,7 @@ class Cobro
     {
         $content = json_decode($content, true);
 
-        $this->id = $content['id'];
+        //$this->id = $content['id'];
         $this->creador = $content['creador'];
         $this->receptor = $content['receptor'];
         $this->creacion = DateTime::createFromFormat('Y-m-d H:i', $content['creacion']);
