@@ -36,7 +36,6 @@ class UserApiController extends AbstractController
      */
 
     // 0.- CREAR USUARI
-    // NEW BOOK
     #[Rest\Post('/crear', name: 'usuario_api_new')]
     public function crearUsuarioApi(
         ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher,

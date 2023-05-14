@@ -161,14 +161,16 @@ class Cobro
     {
         $cobrotArray = [
             'id' => $this->id,
-            'creador' => $this->creador,
-            'receptor' => $this->receptor,
+            'creador' => $this->creador->getId(),
+            'nombre_creador' => $this->creador->getDatosPersonales()->getNombre() ?: $this->creador->getEmail(),
+            'receptor' => $this->receptor->getId(),
+            'nombre_receptor' => $this->receptor->getDatosPersonales()->getNombre() ?: $this->receptor->getEmail(),
             'creacion' => $this->creacion->format('Y-m-d H:i'),
             'titulo' => $this->titulo,
             'texto' => $this->texto,
             'revisado' => $this->revisado,
             'completado' => $this->completado,
-            'fecha_completado' => $this->fecha_completado->format('Y-m-d H:i'),
+            'fecha_completado' => $this->fecha_completado ? $this->fecha_completado->format('Y-m-d H:i') : null,
             'archivado' => $this->archivado
         ];
         return $cobrotArray;

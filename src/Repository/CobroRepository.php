@@ -40,21 +40,24 @@ class CobroRepository extends ServiceEntityRepository
         }
     }
 
-    public function getArchivados($value){
+    public function getArchivados($value, $limite =""): ?array{
 
-        return $this->createQueryBuilder('cobro')
-            ->andWhere("cobro.creador = :val AND archivado=true")
+        $sql = $this->createQueryBuilder('cobro')
+            ->andWhere("cobro.creador = :val AND cobro.archivado = true")
             ->setParameter("val", $value)
-            ->orderBy("cobro.creacion DESC")
-            ->getQuery()
+            ->orderBy("cobro.creacion", "DESC");
+
+        if($limite) $sql->setMaxResults($limite);
+        
+        return $sql->getQuery()
             ->getResult();
     }
 
-    public function getCobrosEnviados($value, $limite = ""): ?array
+    public function getEnviados($value, $limite = ""): ?array
     {
 
         $sql = $this->createQueryBuilder("cobro")
-            ->andWhere("cobro.creador_id = :val AND completado = false")
+            ->andWhere("cobro.creador = :val AND cobro.completado = false")
             ->setParameter("val", $value)
             ->OrderBy("cobro.creacion", "DESC");
         
@@ -65,11 +68,11 @@ class CobroRepository extends ServiceEntityRepository
 
     }
 
-    public function getCobrosRecibidos($value, $limite = ""): ?array
+    public function getRecibidos($value, $limite = ""): ?array
     {
 
         $sql = $this->createQueryBuilder("cobro")
-            ->andWhere("cobro.receptor_id = :val AND completado = false")
+            ->andWhere("cobro.receptor = :val AND cobro.completado = false")
             ->setParameter("val", $value)
             ->OrderBy("cobro.creacion", "DESC");
         
@@ -81,11 +84,11 @@ class CobroRepository extends ServiceEntityRepository
     }
 
 
-    public function getCobrosHistoricoEnviados($value, $limite = ""): ?array
+    public function getHistoricoEnviados($value, $limite = ""): ?array
     {
 
         $sql = $this->createQueryBuilder("cobro")
-            ->andWhere("cobro.creador_id = :val AND completado = true AND revisado = true")
+            ->andWhere("cobro.creador = :val AND cobro.completado = true AND cobro.revisado = true")
             ->setParameter("val", $value)
             ->OrderBy("cobro.fecha_completado", "DESC");
         
@@ -96,11 +99,11 @@ class CobroRepository extends ServiceEntityRepository
 
     }
 
-    public function getCobrosHistoricoRecibidos($value, $limite = ""): ?array
+    public function getHistoricoRecibidos($value, $limite = ""): ?array
     {
 
         $sql = $this->createQueryBuilder("cobro")
-            ->andWhere("cobro.receptor_id = :val AND completado = true AND revisado = true")
+            ->andWhere("cobro.receptor = :val AND cobro.completado = true AND cobro.revisado = true")
             ->setParameter("val", $value)
             ->OrderBy("cobro.fecha_completado", "DESC");
         
