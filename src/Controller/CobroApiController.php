@@ -242,7 +242,7 @@ class CobroApiController extends AbstractController
         return new JsonResponse($response);
     }
 
-    #[Rest\Post('/almacenados', name: 'cobro_api_historico_enviados')]
+    #[Rest\Post('/almacenados', name: 'cobro_api_almacenados')]
     public function getAlmacenados(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $content = $request->getContent();
