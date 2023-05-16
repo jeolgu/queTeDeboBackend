@@ -47,7 +47,8 @@ class CobroApiController extends AbstractController
             // Comprobar que el token es valido y aún no ha expirado
             $content = $request->getContent();
             $datos = json_decode($content, true);
-            $token = $datos["token"];
+            // $token = $datos["token"];
+            $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
             $datos_cobro = $datos["cobro"];
 
             if ($doctrine->getRepository(Token::class)->compruebaToken($token)) {
@@ -106,7 +107,8 @@ class CobroApiController extends AbstractController
     {
         $content = $request->getContent();
         $datos = json_decode($content, true);
-        $token = $datos["token"];
+        // $token = $datos["token"];
+        $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
         $limite = $datos["limite"];
         if ($limite !== "")
             $limite = intval($limite);
@@ -140,7 +142,8 @@ class CobroApiController extends AbstractController
     {
         $content = $request->getContent();
         $datos = json_decode($content, true);
-        $token = $datos["token"];
+        // $token = $datos["token"];
+        $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
         $limite = $datos["limite"];
         if ($limite !== "")
             $limite = intval($limite);
@@ -174,7 +177,8 @@ class CobroApiController extends AbstractController
     {
         $content = $request->getContent();
         $datos = json_decode($content, true);
-        $token = $datos["token"];
+        // $token = $datos["token"];
+        $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
         $limite = $datos["limite"];
         if ($limite !== "")
             $limite = intval($limite);
@@ -208,7 +212,8 @@ class CobroApiController extends AbstractController
     {
         $content = $request->getContent();
         $datos = json_decode($content, true);
-        $token = $datos["token"];
+        // $token = $datos["token"];
+        $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
         $limite = $datos["limite"];
         if ($limite !== "")
             $limite = intval($limite);
@@ -242,7 +247,8 @@ class CobroApiController extends AbstractController
     {
         $content = $request->getContent();
         $datos = json_decode($content, true);
-        $token = $datos["token"];
+        // $token = $datos["token"];
+        $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
         $limite = $datos["limite"];
         if ($limite !== "")
             $limite = intval($limite);
@@ -279,7 +285,8 @@ class CobroApiController extends AbstractController
             // Comprobar que el token es valido y aún no ha expirado
             $content = $request->getContent();
             $datos = json_decode($content, true);
-            $token = $datos["token"];
+            // $token = $datos["token"];
+            $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
             $id_cobro = $datos["cobro"];
 
             if ($doctrine->getRepository(Token::class)->compruebaToken($token)) {
@@ -369,7 +376,8 @@ class CobroApiController extends AbstractController
             // Comprobar que el token es valido y aún no ha expirado
             $content = $request->getContent();
             $datos = json_decode($content, true);
-            $token = $datos["token"];
+            // $token = $datos["token"];
+            $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
             $id_cobro = $datos["cobro"];
 
             if ($doctrine->getRepository(Token::class)->compruebaToken($token)) {
@@ -452,7 +460,8 @@ class CobroApiController extends AbstractController
             // Comprobar que el token es valido y aún no ha expirado
             $content = $request->getContent();
             $datos = json_decode($content, true);
-            $token = $datos["token"];
+            // $token = $datos["token"];
+            $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
             $id_cobro = $datos["cobro"];
 
             if ($doctrine->getRepository(Token::class)->compruebaToken($token)) {

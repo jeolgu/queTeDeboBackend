@@ -213,7 +213,8 @@ class UserApiController extends AbstractController
         try {
             // Comprobar que el token es valido y aún no ha expirado
             $content = $request->getContent();
-            $token = json_decode($content, true)["token"];
+            // $token = json_decode($content, true)["token"];
+            $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
 
             if ($doctrine->getRepository(Token::class)->compruebaToken($token)) {
                 // MUESTRO DATOS
@@ -252,7 +253,8 @@ class UserApiController extends AbstractController
             // Comprobar que el token es valido y aún no ha expirado
             $content = $request->getContent();
             $datos = json_decode($content, true);
-            $token = $datos["token"];
+            // $token = $datos["token"];
+            $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
             $datos_personales = $datos["datos_personales"];
 
             if ($doctrine->getRepository(Token::class)->compruebaToken($token)) {
@@ -313,7 +315,8 @@ class UserApiController extends AbstractController
             // Comprobar que el token es valido y aún no ha expirado
             $content = $request->getContent();
             $datos = json_decode($content, true);
-            $token = $datos["token"];
+            // $token = $datos["token"];
+            $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
             $passOld = $datos["passO"];
             $passNew = $datos["passN"];
 
