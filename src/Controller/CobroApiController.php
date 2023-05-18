@@ -76,13 +76,13 @@ class CobroApiController extends AbstractController
 
                     $response = [
                         'ok' => true,
-                        'msg' => "Cobro creado correctamente"
+                        'message' => "Cobro creado correctamente"
                     ];
                 } else {
                     $response = [
                         'ok' => false,
                         'err' => 2002,
-                        'msg' => "Error al crear el cobro"
+                        'message' => "Error al crear el cobro"
                     ];
                 }
             } else {
@@ -132,7 +132,7 @@ class CobroApiController extends AbstractController
             $response = [
                 'ok' => false,
                 'err' => 2010,
-                'msg' => "Token expirado"
+                'message' => "Token expirado"
             ];
         }
         return new JsonResponse($response);
@@ -167,7 +167,7 @@ class CobroApiController extends AbstractController
             $response = [
                 'ok' => false,
                 'err' => 2010,
-                'msg' => "Token expirado"
+                'message' => "Token expirado"
             ];
         }
         return new JsonResponse($response);
@@ -202,7 +202,7 @@ class CobroApiController extends AbstractController
             $response = [
                 'ok' => false,
                 'err' => 2010,
-                'msg' => "Token expirado"
+                'message' => "Token expirado"
             ];
         }
         return new JsonResponse($response);
@@ -237,7 +237,7 @@ class CobroApiController extends AbstractController
             $response = [
                 'ok' => false,
                 'err' => 2010,
-                'msg' => "Token expirado"
+                'message' => "Token expirado"
             ];
         }
         return new JsonResponse($response);
@@ -272,7 +272,7 @@ class CobroApiController extends AbstractController
             $response = [
                 'ok' => false,
                 'err' => 2010,
-                'msg' => "Token expirado"
+                'message' => "Token expirado"
             ];
         }
         return new JsonResponse($response);
@@ -313,21 +313,21 @@ class CobroApiController extends AbstractController
                         if ($cobro->isArchivado()) {
                             return new JsonResponse([
                                 "ok" => false,
-                                "msg" => "El cobro ya está archivado"
+                                "message" => "El cobro ya está archivado"
                             ]);
                         }
 
                         if ($cobro->isCompletado()) {
                             return new JsonResponse([
                                 "ok" => false,
-                                "msg" => "El cobro ya está completado"
+                                "message" => "El cobro ya está completado"
                             ]);
                         }
 
                         if ($cobro->isRevisado()) {
                             return new JsonResponse([
                                 "ok" => false,
-                                "msg" => "Cobro ya esta pendiente de revisar"
+                                "message" => "Cobro ya esta pendiente de revisar"
                             ]);
                         }
 
@@ -339,13 +339,13 @@ class CobroApiController extends AbstractController
 
                             $response = [
                                 'ok' => true,
-                                'msg' => "Cobro pasado a pendiente de revisión correctamente"
+                                'message' => "Cobro pasado a pendiente de revisión correctamente"
                             ];
                         } else {
                             $response = [
                                 'ok' => false,
                                 'err' => 2032,
-                                'msg' => "Error al intentar pasar a pendiente el cobro"
+                                'message' => "Error al intentar pasar a pendiente el cobro"
                             ];
                         }
 
@@ -404,14 +404,14 @@ class CobroApiController extends AbstractController
                         if ($cobro->isArchivado()) {
                             return new JsonResponse([
                                 "ok" => false,
-                                "msg" => "El cobro ya está archivado"
+                                "message" => "El cobro ya está archivado"
                             ]);
                         }
 
                         if ($cobro->isCompletado()) {
                             return new JsonResponse([
                                 "ok" => false,
-                                "msg" => "El cobro ya está completado"
+                                "message" => "El cobro ya está completado"
                             ]);
                         }
 
@@ -424,13 +424,13 @@ class CobroApiController extends AbstractController
 
                             $response = [
                                 'ok' => true,
-                                'msg' => "Cobro pasado a completado correctamente"
+                                'message' => "Cobro pasado a completado correctamente"
                             ];
                         } else {
                             $response = [
                                 'ok' => false,
                                 'err' => 2043,
-                                'msg' => "Error al intentar pasar a completado el cobro"
+                                'message' => "Error al intentar pasar a completado el cobro"
                             ];
                         }
                     }
@@ -488,14 +488,14 @@ class CobroApiController extends AbstractController
                         if ($cobro->isArchivado()) {
                             return new JsonResponse([
                                 "ok" => false,
-                                "msg" => "El cobro ya está archivado"
+                                "message" => "El cobro ya está archivado"
                             ]);
                         }
 
                         if ($cobro->isCompletado()) {
                             return new JsonResponse([
                                 "ok" => false,
-                                "msg" => "El cobro ya está completado"
+                                "message" => "El cobro ya está completado"
                             ]);
                         }
 
@@ -507,13 +507,13 @@ class CobroApiController extends AbstractController
 
                             $response = [
                                 'ok' => true,
-                                'msg' => "Cobro archivado correctamente"
+                                'message' => "Cobro archivado correctamente"
                             ];
                         } else {
                             $response = [
                                 'ok' => false,
                                 'err' => 2053,
-                                'msg' => "Error al intentar almacenar el cobro"
+                                'message' => "Error al intentar almacenar el cobro"
                             ];
                         }
                     }

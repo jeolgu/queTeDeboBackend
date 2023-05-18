@@ -279,13 +279,13 @@ class UserApiController extends AbstractController
 
                     $response = [
                         'ok' => true,
-                        'msg' => "Datos personales guardados correctamente"
+                        'message' => "Datos personales guardados correctamente"
                     ];
                 } else {
                     $response = [
                         'ok' => false,
                         'err' => 1032,
-                        'msg' => "Error al guardar los datos personales"
+                        'message' => "Error al guardar los datos personales"
                     ];
                 }
             } else {
@@ -339,14 +339,14 @@ class UserApiController extends AbstractController
 
                     $response = [
                         'ok' => true,
-                        'msg' => 'Contraseña modificada correctamente'
+                        'message' => 'Contraseña modificada correctamente'
                     ];
                 }
                 else{
                     $response = [
                         'ok' => false,
                         'err' => 1042,
-                        'msg' => "Contraseña actual no coincide con la enviada"
+                        'message' => "Contraseña actual no coincide con la enviada"
                     ];
                 }
             } else {
