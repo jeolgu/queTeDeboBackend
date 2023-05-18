@@ -66,6 +66,7 @@ class CobroApiController extends AbstractController
                 $cobro->setCompletado(false);
                 $cobro->setFechaCompletado(null);
                 $cobro->setArchivado(false);
+                $cobro->importe($datos_cobro["importe"]);
 
                 $error = $validator->validate($cobro);
                 if (count($error) == 0) {
@@ -109,7 +110,7 @@ class CobroApiController extends AbstractController
         $datos = json_decode($content, true);
         // $token = $datos["token"];
         $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
-        $limite = $datos["limite"];
+        $limite = isset($datos["limite"]) ? $datos["limite"] : "";
         if ($limite !== "")
             $limite = intval($limite);
 
@@ -125,7 +126,7 @@ class CobroApiController extends AbstractController
 
             $response = [
                 'ok' => true,
-                'cobros' => $cobrosList,
+                'cobros' => $cobrosList
             ];
         } else {
             $response = [
@@ -144,7 +145,7 @@ class CobroApiController extends AbstractController
         $datos = json_decode($content, true);
         // $token = $datos["token"];
         $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
-        $limite = $datos["limite"];
+        $limite = isset($datos["limite"]) ? $datos["limite"] : "";
         if ($limite !== "")
             $limite = intval($limite);
 
@@ -179,7 +180,7 @@ class CobroApiController extends AbstractController
         $datos = json_decode($content, true);
         // $token = $datos["token"];
         $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
-        $limite = $datos["limite"];
+        $limite = isset($datos["limite"]) ? $datos["limite"] : "";
         if ($limite !== "")
             $limite = intval($limite);
 
@@ -214,7 +215,7 @@ class CobroApiController extends AbstractController
         $datos = json_decode($content, true);
         // $token = $datos["token"];
         $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
-        $limite = $datos["limite"];
+        $limite = isset($datos["limite"]) ? $datos["limite"] : "";
         if ($limite !== "")
             $limite = intval($limite);
 
@@ -249,7 +250,7 @@ class CobroApiController extends AbstractController
         $datos = json_decode($content, true);
         // $token = $datos["token"];
         $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
-        $limite = $datos["limite"];
+        $limite = isset($datos["limite"]) ? $datos["limite"] : "";
         if ($limite !== "")
             $limite = intval($limite);
 

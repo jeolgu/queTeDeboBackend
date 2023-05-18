@@ -44,6 +44,9 @@ class Cobro
     #[ORM\Column(options: ["default" => false])]
     private ?bool $archivado = null;
 
+    #[ORM\Column]
+    private ?float $importe = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -157,6 +160,18 @@ class Cobro
         return $this;
     }
 
+    public function getImporte(): ?float
+    {
+        return $this->importe;
+    }
+
+    public function setImporte(float $importe): self
+    {
+        $this->importe = $importe;
+
+        return $this;
+    }
+
     public function toArray(): array
     {
         $cobrotArray = [
@@ -171,7 +186,9 @@ class Cobro
             'revisado' => $this->revisado,
             'completado' => $this->completado,
             'fecha_completado' => $this->fecha_completado ? $this->fecha_completado->format('Y-m-d H:i') : null,
-            'archivado' => $this->archivado
+            'archivado' => $this->archivado,
+            'importe' => $this->importe
+            
         ];
         return $cobrotArray;
     }
@@ -190,6 +207,9 @@ class Cobro
         $this->completado = $content["completado"];
         $this->fecha_completado = DateTime::createFromFormat('Y-m-d H:i', $content['fecha_completado']);
         $this->archivado = $content["archivado"];
+        $this->importe = $content["importe"];
         
     }
+
+
 }

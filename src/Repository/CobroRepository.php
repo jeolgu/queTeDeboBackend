@@ -61,7 +61,7 @@ class CobroRepository extends ServiceEntityRepository
             ->setParameter("val", $value)
             ->OrderBy("cobro.creacion", "DESC");
         
-            if($limite) $sql->setMaxResults($limite);
+            //if($limite) $sql->setMaxResults($limite);
 
             return $sql->getQuery()
                     ->getResult();
