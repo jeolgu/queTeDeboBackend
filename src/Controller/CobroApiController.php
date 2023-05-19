@@ -66,7 +66,7 @@ class CobroApiController extends AbstractController
                 $cobro->setCompletado(false);
                 $cobro->setFechaCompletado(null);
                 $cobro->setArchivado(false);
-                $cobro->importe($datos_cobro["importe"]);
+                $cobro->setImporte($datos_cobro["importe"]);
 
                 $error = $validator->validate($cobro);
                 if (count($error) == 0) {
