@@ -220,9 +220,10 @@ class UserApiController extends AbstractController
                 // MUESTRO DATOS
                 $datos_token = $doctrine->getRepository(Token::class)->dameUsuarioPorToken($token);
                 $datos_personales = $datos_token[0]->getIdUsuario()->getDatosPersonales();
+                $arrDatosPersonales = $datos_personales->toArray();
                 $response = [
                     'ok' => true,
-                    'datos_personales' => $datos_personales->toArray()
+                    $arrDatosPersonales
                 ];
             } else {
                 // TOKEN NO VALIDO (EL FRONT PEDIRÁ LOGIN DE NUEVO)
@@ -252,10 +253,10 @@ class UserApiController extends AbstractController
         try {
             // Comprobar que el token es valido y aún no ha expirado
             $content = $request->getContent();
-            $datos = json_decode($content, true);
+            $datos_personales = json_decode($content, true);
+
             // $token = $datos["token"];
             $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
-            $datos_personales = $datos["datos_personales"];
 
             if ($doctrine->getRepository(Token::class)->compruebaToken($token)) {
                 // MUESTRO DATOS
@@ -296,6 +297,7 @@ class UserApiController extends AbstractController
                     'error' => 'Token expirado'
                 ];
             }
+
         } catch (\Throwable $e) {
             $response = [
                 'ok' => false,
