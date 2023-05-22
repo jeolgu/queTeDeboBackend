@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Cobro;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query\Expr\OrderBy;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -82,7 +81,6 @@ class CobroRepository extends ServiceEntityRepository
                     ->getResult();
 
     }
-
 
     public function getHistoricoEnviados($value, $limite = ""): ?array
     {

@@ -15,11 +15,11 @@ class Cobro
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creador = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $receptor = null;
 
@@ -32,16 +32,16 @@ class Cobro
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texto = null;
 
-    #[ORM\Column(options: ["default" => false])]
+    #[ORM\Column(nullable: true, options: ["default" => false])]
     private ?bool $revisado = null;
 
-    #[ORM\Column(options: ["default" => false])]
+    #[ORM\Column(nullable: true, options: ["default" => false])]
     private ?bool $completado = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fecha_completado = null;
 
-    #[ORM\Column(options: ["default" => false])]
+    #[ORM\Column(nullable: true, options: ["default" => false])]
     private ?bool $archivado = null;
 
     #[ORM\Column]
@@ -57,7 +57,7 @@ class Cobro
         return $this->creador;
     }
 
-    public function setCreador(User $creador): self
+    public function setCreador(?User $creador): self
     {
         $this->creador = $creador;
 
@@ -69,7 +69,7 @@ class Cobro
         return $this->receptor;
     }
 
-    public function setReceptor(User $receptor): self
+    public function setReceptor(?User $receptor): self
     {
         $this->receptor = $receptor;
 
@@ -117,7 +117,7 @@ class Cobro
         return $this->revisado;
     }
 
-    public function setRevisado(bool $revisado): self
+    public function setRevisado(?bool $revisado): self
     {
         $this->revisado = $revisado;
 
@@ -129,7 +129,7 @@ class Cobro
         return $this->completado;
     }
 
-    public function setCompletado(bool $completado): self
+    public function setCompletado(?bool $completado): self
     {
         $this->completado = $completado;
 
@@ -153,7 +153,7 @@ class Cobro
         return $this->archivado;
     }
 
-    public function setArchivado(bool $archivado): self
+    public function setArchivado(?bool $archivado): self
     {
         $this->archivado = $archivado;
 
@@ -210,6 +210,4 @@ class Cobro
         $this->importe = $content["importe"];
         
     }
-
-
 }

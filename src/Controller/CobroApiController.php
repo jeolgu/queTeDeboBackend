@@ -46,20 +46,32 @@ class CobroApiController extends AbstractController
         try {
             // Comprobar que el token es valido y aún no ha expirado
             $content = $request->getContent();
-            $datos = json_decode($content, true);
+            $datos_cobro = json_decode($content, true);
             // $token = $datos["token"];
             $token = str_replace("Bearer ", "", $request->headers->get("authorization"));
-            $datos_cobro = $datos["cobro"];
+            //$datos_cobro = $datos["cobro"];
 
             if ($doctrine->getRepository(Token::class)->compruebaToken($token)) {
                 // MUESTRO DATOS
                 $datos_token = $doctrine->getRepository(Token::class)->dameUsuarioPorToken($token);
-                $usuarioReceptor = $doctrine->getRepository(User::class)->find($datos_cobro["receptor"]);
-
+                $usuarioReceptor = $doctrine->getRepository(User::class)->findByEmail($datos_cobro["receptor"]);
+                
+                if(count($usuarioReceptor) == 0 ){
+                    return new JsonResponse([
+                        'ok' => false,
+                        'error' => 2003,
+                        'message' => 'No se ha encontrado el receptor en el sistema'
+                    ]);
+                }
+                
+                $receptor = $usuarioReceptor[0];
+                $fecha_creacion = str_replace("T", " ", $datos_cobro['creacion']);
+                $fecha_creacion = str_replace(".000Z","", $fecha_creacion);
+                
                 $cobro = new Cobro();
                 $cobro->setCreador($datos_token[0]->getIdUsuario()); // el creador es el mismo que hace la petición
-                $cobro->setReceptor($usuarioReceptor);
-                $cobro->setCreacion(DateTime::createFromFormat('Y-m-d H:i:s', $datos_cobro['creacion']));
+                $cobro->setReceptor($receptor);
+                $cobro->setCreacion(DateTime::createFromFormat('Y-m-d H:i:s', $fecha_creacion));
                 $cobro->setTitulo($datos_cobro["titulo"]);
                 $cobro->setTexto($datos_cobro["texto"]);
                 $cobro->setRevisado(false);
@@ -69,6 +81,7 @@ class CobroApiController extends AbstractController
                 $cobro->setImporte($datos_cobro["importe"]);
 
                 $error = $validator->validate($cobro);
+
                 if (count($error) == 0) {
                     $entityManager = $doctrine->getManager();
                     $entityManager->persist($cobro);
@@ -363,7 +376,7 @@ class CobroApiController extends AbstractController
             $response = [
                 'ok' => false,
                 'err' => 1030,
-                'error' => 'Error al recuperar datos personales: ' . $e->getMessage(),
+                'error' => 'Error al intentar pasar a pendiente: ' . $e->getMessage(),
             ];
         }
         return new JsonResponse($response);
@@ -447,7 +460,7 @@ class CobroApiController extends AbstractController
             $response = [
                 'ok' => false,
                 'err' => 1030,
-                'error' => 'Error al recuperar datos personales: ' . $e->getMessage(),
+                'error' => 'Error intentar completar el cobro: ' . $e->getMessage(),
             ];
         }
         return new JsonResponse($response);
@@ -492,12 +505,12 @@ class CobroApiController extends AbstractController
                             ]);
                         }
 
-                        if ($cobro->isCompletado()) {
-                            return new JsonResponse([
-                                "ok" => false,
-                                "message" => "El cobro ya está completado"
-                            ]);
-                        }
+                        // if ($cobro->isCompletado()) {
+                        //     return new JsonResponse([
+                        //         "ok" => false,
+                        //         "message" => "El cobro ya está completado"
+                        //     ]);
+                        // }
 
                         $cobro->setArchivado(true);
                         $error = $validator->validate($cobro);
@@ -530,7 +543,7 @@ class CobroApiController extends AbstractController
             $response = [
                 'ok' => false,
                 'err' => 2050,
-                'error' => 'Error al recuperar datos personales: ' . $e->getMessage(),
+                'error' => 'Error al intentar archivar el cobro: ' . $e->getMessage(),
             ];
         }
         return new JsonResponse($response);
